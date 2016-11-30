@@ -1,4 +1,3 @@
-' Launches the calculator function and does a calculation on it...
 Sub Calc()
     Dim ReturnValue As Long
     Dim I
@@ -14,3 +13,11 @@ Sub Calc()
     SendKeys "=", True    ' Get grand total.
 '    SendKeys "%{F4}", True    ' Send ALT+F4 to close Calculator.
 End Sub
+
+
+Sub Chrome()
+    Dim ReturnValue As Long
+    Dim I
+    ReturnValue = CInt(Shell("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", 1))    ' Run Calculator.
+End Sub
+
