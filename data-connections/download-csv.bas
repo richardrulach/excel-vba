@@ -17,6 +17,9 @@ Sub LoadData()
     Dim myURL As String
 
     ' PROVIDE THE URL FOR DOWNLOADING THE CSV FILE FROM
+    ' useful additions to querystring to reporting services:
+    '       rs:Format=CSV           'select the format that you want
+    '       rs:ClearSession=true    'get latest data
     myURL = ""
     
     Dim WinHttpReq As Object
@@ -43,9 +46,13 @@ End Sub
 
 Sub CSV_Import(strFile)
     Dim ws As Worksheet
-    
     Set ws = ActiveWorkbook.Sheets(2)
-    
+
+    ' DELETE ANY QUERY TABLES THAT HAVE BEEN ADDED ALREADY
+    For each qs in ws.QueryTables
+        qs.delete                
+    Next    
+                
     With ws.QueryTables.Add(Connection:="TEXT;" & strFile, Destination:=ws.Range("B3"))
          .TextFileParseType = xlDelimited
          .TextFileCommaDelimiter = True
