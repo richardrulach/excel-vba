@@ -78,8 +78,10 @@ Sub Compare_NewSheet()
                 With Cells(rowCounter + 2, colCounter + 1)
                     .AddComment
                     .Comment.Visible = False
-                    .Comment.Text Text:=A_Title & ": " & Sheets(A_Sheet).Cells(A_Row + rowCounter, A_Col + colCounter).Value & Chr(10) & _
-                                        B_Title & ": " & Sheets(B_Sheet).Cells(B_Row + rowCounter, B_Col + colCounter).Value & Chr(10)
+                    .Comment.Text Text:="Column: " & Sheets(A_Sheet).Cells(A_Row - 1, A_Col + colCounter).Value & Chr(10) & _
+                                            "Row: " & Sheets(A_Sheet).Cells(A_Row + rowCounter, A_Col).Value & Chr(10) & Chr(10) & _
+                                            A_Title & ": " & Sheets(A_Sheet).Cells(A_Row + rowCounter, A_Col + colCounter).Value & Chr(10) & _
+                                            B_Title & ": " & Sheets(B_Sheet).Cells(B_Row + rowCounter, B_Col + colCounter).Value & Chr(10)
                 End With
             End If
                 
