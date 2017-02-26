@@ -53,7 +53,7 @@ Sub Compare_NewSheet()
     Range(Cells(2, 1), Cells(EndRow - A_Row + 2, EndCol - A_Col + 1)).Select
     Call SetGreenForTrueRedForFalse
     
-    Range(Cells(1, 1)).Select
+    Range("A1").Select
 End Sub
 
 
