@@ -6,27 +6,6 @@ Public mySheet As Worksheet
 
 
 
-'Sub ProcessFilesInFolder()
-'    Dim fso As Scripting.FileSystemObject
-'    Set fso = New FileSystemObject
-'
-'    Application.DisplayAlerts = False
-'
-'    Dim f As Scripting.File
-'    For Each f In fso.GetFolder("X:\REPORTING\TESTAUTO\testset\").Files
-'        Call DeleteSheets(f.Path)
-'        Debug.Print f.Path
-'    Next
-
-'    Set f = Nothing
-'    Set fso = Nothing
-    
-'    Application.DisplayAlerts = True
-
-'End Sub
-
-
-
 Sub Main_SingleFile()
     
     Dim sFileName As String
@@ -64,7 +43,6 @@ Sub Main_AllFilesInFolder()
         Set fso = New FileSystemObject
         Dim f As Scripting.File
         
-        Application.ScreenUpdating = False
         For Each f In fso.GetFolder(fldr.SelectedItems(1)).Files
             If LCase(Right(f.Path, Len(f.Path) - InStrRev(f.Path, "."))) = "xlsx" Then
                 If IsOpen(f.Path) Then
@@ -77,7 +55,6 @@ Sub Main_AllFilesInFolder()
                 myBook.Close
             End If
         Next
-        Application.ScreenUpdating = True
         
         Set f = Nothing
         Set fso = Nothing
@@ -88,11 +65,8 @@ End Sub
 
 Sub UpdateLMC()
     
-    Dim sTargetWorkbook As String
-    
     Dim thisWB As Workbook
     Set thisWB = ThisWorkbook
-
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ' TARGET SPREADSHEET VALIDATION
@@ -128,17 +102,13 @@ Sub UpdateLMC()
     bATP = IsATPvalid
     bSPO = IsSPOvalid
 
-'Exit Sub
-
-sTargetWorkbook = myBook.Name
-
-
+    
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ' ADD VALIDATION
     '   - Breaks down into two parts:
     '       - Error Check Sheet (most complicated formulas)
     '       - Executive Summary Sheet (set of fixed formulas which update as the report is populated)
-    With Workbooks(sTargetWorkbook)
+    With myBook
     
         .Sheets("Error Check").Cells(3, 3).Formula = GetFormula("Loan Pool Summary", "Total Book #", "G")
         .Sheets("Error Check").Cells(3, 4).Formula = GetFormula("Loan Characteristics", "Total Book #", "H")
