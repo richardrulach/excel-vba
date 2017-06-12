@@ -5,6 +5,19 @@ Public myBook As Workbook
 Public mySheet As Worksheet
 
 
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'   MAIN SUBROUTINES
+'
+'       - SINGLE FILE
+'           - OPENS FILE AND ADDS VALIDATION
+'           - DOES NOT SAVE (TO ENABLE MANUAL CHECKING)
+'
+'       - MULTIPLE FILES
+'           - ALL XLSX FILES IN A SINGLE DIRECTORY
+'           - OPEN
+'           - ADD VALIDATION
+'           - SAVE AND CLOSE
+'
 
 Sub Main_SingleFile()
     
@@ -62,6 +75,15 @@ Sub Main_AllFilesInFolder()
     
     Set fldr = Nothing
 End Sub
+
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
+'
+'   MAIN SUBROUTINE FOR APPLYING THE VALIDATION TO A FILE
+'
+'
 
 Sub UpdateLMC()
     
@@ -265,6 +287,11 @@ Sub UpdateLMC()
 End Sub
 
 
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'   ATP AND SPO CHECKS
+'       - INITIALLY FOR H1 POOLS
+'
+
 Function IsATPvalid() As Boolean
     Dim rng As Range
     Dim bResult As Boolean
@@ -297,35 +324,6 @@ Function IsSPOvalid() As Boolean
     IsSPOvalid = bResult
 End Function
 
-Sub reset()
-
-    Application.DisplayAlerts = False
-    
-    Dim lWorkbook As Workbook
-    Set lWorkbook = Workbooks("M3 TEST.xlsx")
-
-    lWorkbook.Sheets("Error Check").Delete
-    lWorkbook.Sheets("Contents").Delete
-    lWorkbook.Sheets("Ex Summary").Delete
-    lWorkbook.Sheets("Definitions").Delete
-    
-    Application.DisplayAlerts = True
-    
-End Sub
-
-
-
-Function IsOpen(sPath)
-    Dim wb As Workbook, bIsOpen As Boolean
-    bIsOpen = False
-    For Each wb In Workbooks
-        If wb.FullName = sPath Then
-            bIsOpen = True
-        End If
-        Debug.Print (wb.FullName)
-    Next
-    IsOpen = bIsOpen
-End Function
 
     
         
@@ -392,7 +390,11 @@ End Function
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '   DIRECTORY FUNCTIONS
 '
+'       - SELECT FILE
+'           - DISPLAYS DIALOG TO GET SINGLE FILE
 '
+'       - IS OPEN
+'           - CHECKS IF A FILE IS OPEN IN CURRENT WORKBOOKS
 
 Function SelectFile()
     Dim intChoice As Integer
@@ -409,18 +411,17 @@ Function SelectFile()
 End Function
 
 
-'Sub caller()
-'    Set myBook = Workbooks("2017.05.31 - D5 - Loan Management Committee Report.xlsx")
-'    Dim lSheet As String, sSet As String, r As Range, sSearch
-'    sSearch = "Change"
-'    lSheet = "Interest Rates"
-'    sSet = "3:3"
-'    Set r = myBook.Sheets(lSheet).Range(sSet).Find(What:=sSearch, LookIn:=xlValues)
-'    Debug.Print "HERE:"
-'    Debug.Print (r.Address)
-'    Debug.Print (r.Column)
-
-'End Sub
+Function IsOpen(sPath)
+    Dim wb As Workbook, bIsOpen As Boolean
+    bIsOpen = False
+    For Each wb In Workbooks
+        If wb.FullName = sPath Then
+            bIsOpen = True
+        End If
+        Debug.Print (wb.FullName)
+    Next
+    IsOpen = bIsOpen
+End Function
 
 
 
